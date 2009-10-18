@@ -1,0 +1,22 @@
+%li[waste_book]{ highlightable(dom_id(waste_book, :tools)) }
+  - if waste_book.w_type == "income"
+    .strip.income 收入
+  - else
+    .strip.outgo 支出
+  %div
+    .tools{ invisible, :id => dom_id(waste_book, :tools) }
+      %small
+        = link_to_edit(waste_book) + " | "
+        = link_to_delete(waste_book) + "&nbsp;"
+    = waste_book.name << " &ndash; "
+    %tt 
+      == added #{time_ago_in_words(waste_book.created_at)} ago
+    %dt
+      - if waste_book.customer
+        客户：#{waste_book.customer.name << ' | '}
+      金额：#{waste_book.money}
+    %dt
+      收入明细：#{waste_book.description}
+      
+
+

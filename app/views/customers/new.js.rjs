@@ -1,0 +1,9 @@
+page.call "crm.flick", :empty, :toggle
+page.call "crm.flip_form", :create_customer
+
+if params[:cancel] != "true"
+  page[:create_customer].replace_html :partial => "create"
+  page.call "crm.set_title", :create_customer, "创建客户"
+else
+  page.call "crm.set_title", :create_customer, "客户"
+end

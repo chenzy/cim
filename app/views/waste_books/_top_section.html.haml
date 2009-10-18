@@ -1,0 +1,31 @@
+.section
+  %table{ :width => 500, :cellpadding => 0, :cellspacing => 0 }
+    %tr
+      %td{ :valign => :top, :colspan => 3 }
+        .label.top.req 收支类型：
+        = f.select(:w_type, {"收入" => "income", "支出" => "outgo"}, {}, :style => "width:110px")
+    %tr
+      %td{ :valign => :top, :colspan => 3  }
+        .label.top.req 日期：
+        = f.text_field :happen_time, :value => f.object.happen_time ? f.object.happen_time.to_s(:mmddyyyy) : "", :style => "width:110px", :autocomplete => :off
+    - fields_for(@customer) do |a|
+      %td{ :valign => :top, :colspan => 3  }
+        .label
+          客户
+          %span#customer_selector>
+        = collection_select :customer, :id, @customers, :id, :name, { :selected => @customer.id || 0, :prompt => "请选择…"}, { :style => "width:240px; display:none;" }
+        = a.text_field :name, :style => "width:240px; display:none;"
+    %tr
+      %td{ :valign => :top }
+        .label.top.req 项目：
+        = f.text_field :name, :style => "width:240px"
+      %td= spacer
+      %td{ :valign => :top }
+        .label.top.req 金额：
+        = f.text_field :money, :style => "width:240px;text-align:right;"
+    %tr
+      %td{ :valign => :top, :colspan => 3 }
+        .label 收入明细：
+        = f.text_area :description, :style => "width:500px", :rows => 4
+         
+         

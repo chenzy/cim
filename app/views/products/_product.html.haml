@@ -1,0 +1,13 @@
+%li[product]{ highlightable(dom_id(product, :tools)) }
+ 
+  %div
+    .tools{ invisible, :id => dom_id(product, :tools) }
+      %small
+        = link_to_edit(product) + " | "
+        = link_to_delete(product) + "&nbsp;"
+    = product.name << "&nbsp;[" << product.spec << "]" << " &ndash; "
+    %tt 
+      == added #{time_ago_in_words(product.created_at)} ago
+      
+
+

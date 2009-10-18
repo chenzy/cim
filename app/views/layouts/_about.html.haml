@@ -1,0 +1,14 @@
+#about{ hidden }
+  %h3
+    企业内部管理系统 版本
+    %span.cool== v#{FatFreeCRM::Version}
+    == (#{ActiveRecord::Base.connection.adapter_name.downcase})
+  %p
+    感谢使用本系统! 
+    %p
+      技术支持:
+      %ul{:style => "margin: 0px 0px 0px 15px"}
+        %li== &raquo; MSN：chenzy1984@hotmail.com
+        %li== &raquo; QQ：179608226
+        %li== &raquo; 联系电话：13868009121
+        %li== &raquo; 联系人：陈先生

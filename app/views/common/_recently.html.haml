@@ -1,0 +1,7 @@
+- @recent = Activity.for(@current_user).recent
+.panel#recently
+  .caption 近来项目
+  - unless @recent.empty?
+    = render :partial => "common/recent", :collection => @recent
+  - else
+    %div 暂无近来项目显示。

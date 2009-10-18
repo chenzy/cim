@@ -1,0 +1,18 @@
+id = called_from_landing_page? ? "edit_waste_book" : dom_id(@waste_book)
+
+if @waste_book.errors.empty?
+  if called_from_landing_page?
+    page.call "crm.flip_form", :edit_waste_book
+    page.call "crm.set_title", :edit_waste_book, @waste_book.name
+    page << refresh_sidebar(:show, :summary)
+  else
+    page[id].replace :partial => "waste_book", :collection => [ @waste_book ]
+    page[id].visual_effect :highlight, :duration => 1.0
+    page << refresh_sidebar(:index)
+  end
+else  
+  page[id].replace_html :partial => "edit"
+  page.call "crm.create_or_select_customer", request.referer =~ /\/customers\// || @customer.id.blank?
+  page[id].visual_effect :shake, :duration => 0.25, :distance => 6
+  page[:waste_book_name].focus
+end

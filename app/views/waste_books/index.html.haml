@@ -1,0 +1,16 @@
+= styles_for :waste_book
+
+.title_tools
+  = link_to_inline(:create_waste_book, new_waste_book_path, {:text=>"创建现金收支记录"})
+
+.title
+  %span#create_waste_book_title 现金收支
+  = image_tag("loading.gif", :size => "16x16", :id => "loading", :style => "display: none;")
+.remote#create_waste_book{ hidden }
+
+.list#waste_books
+  - unless @waste_books.empty?
+    = render :partial => "waste_book", :collection => @waste_books
+  - else
+    = render :partial => "common/empty"
+#paginate= render :partial => "common/paginate"

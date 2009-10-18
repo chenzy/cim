@@ -1,0 +1,16 @@
+= styles_for :customer
+
+.title_tools
+  = link_to_inline(:create_customer, new_customer_path, {:text=>"创建客户"})
+
+.title
+  %span#create_customer_title 客户
+  = image_tag("loading.gif", :size => "16x16", :id => "loading", :style => "display: none;")
+.remote#create_customer{ hidden }
+
+.list#customers
+  - unless @customers.empty?
+    = render :partial => "customer", :collection => @customers
+  - else
+    = render :partial => "common/empty"
+#paginate= render :partial => "common/paginate"

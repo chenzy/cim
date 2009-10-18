@@ -1,0 +1,24 @@
+%li[warehouse_list]{ highlightable(dom_id(warehouse_list, :tools)) }
+  - if warehouse_list.w_type == 'in'
+    .strip.income 入库单
+  - else
+    .strip.outgo 出库单
+  %div
+    .tools{ invisible, :id => dom_id(warehouse_list, :tools) }
+      %small
+        = link_to_edit(warehouse_list) + " | "
+        = link_to_delete(warehouse_list) + "&nbsp;"
+    = warehouse_list.number << " &ndash; "
+    %tt 
+      == added #{time_ago_in_words(warehouse_list.created_at)} ago
+    %dt
+      日期：#{warehouse_list.happen_time}
+      |
+      客户：#{warehouse_list.customer.blank? ? "" : warehouse_list.customer.name}
+      | 
+      合计：#{warehouse_list.total}
+    %dt
+      备注：#{warehouse_list.description}
+      
+
+

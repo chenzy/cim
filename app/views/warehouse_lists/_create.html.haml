@@ -1,0 +1,19 @@
+- remote_form_for(@warehouse_list, :html => one_submit_only(:warehouse_list)) do |f|
+  -@warehouse_list.build_warehouse_list_items unless @warehouse_list.warehouse_list_items
+  = link_to_close new_warehouse_list_path
+  = f.error_messages
+  = render :partial => "warehouse_lists/top_section",  :locals => { :f => f }
+  .subtitle 
+    %small
+      ▼
+    产品    
+  #items
+    - f.fields_for :warehouse_list_items do |warehouse_list_item_form|
+      = render :partial => 'warehouse_lists/warehouse_list_item', :locals => { :f => warehouse_list_item_form}
+    %small
+      = add_child_link "增加产品", f, :warehouse_list_items
+  .buttonbar
+    = f.submit "创建出入库单"
+    or 
+    = link_to_cancel new_warehouse_list_path
+    

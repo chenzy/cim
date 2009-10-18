@@ -1,0 +1,16 @@
+= styles_for :product
+
+.title_tools
+  = link_to_inline(:create_product, new_product_path, {:text=>"创建产品"})
+
+.title
+  %span#create_product_title 产品
+  = image_tag("loading.gif", :size => "16x16", :id => "loading", :style => "display: none;")
+.remote#create_product{ hidden }
+
+.list#products
+  - unless @products.empty?
+    = render :partial => "product", :collection => @products
+  - else
+    = render :partial => "common/empty"
+#paginate= render :partial => "common/paginate"

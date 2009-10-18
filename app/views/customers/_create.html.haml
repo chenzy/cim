@@ -1,0 +1,9 @@
+- remote_form_for(@customer, :html => one_submit_only(:customer)) do |f|
+  = link_to_close new_customer_path 
+  = f.error_messages
+  = render :partial => "customers/top_section",  :locals => { :f => f }
+  .buttonbar
+    = f.submit "创建客户"
+    or 
+    = link_to_cancel new_customer_path
+    

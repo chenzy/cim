@@ -1,0 +1,6 @@
+unless @warehouse_lists.blank?
+  page[:warehouse_lists].replace_html render(:partial => "warehouse_list", :collection => @warehouse_lists)
+else
+  page[:warehouse_lists].replace_html render(:partial => "common/empty")
+end 
+page[:paginate].replace_html render(:partial => "common/paginate")

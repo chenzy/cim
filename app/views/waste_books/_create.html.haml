@@ -1,0 +1,9 @@
+- remote_form_for(@waste_book, :html => one_submit_only(:waste_book)) do |f|
+  = link_to_close new_waste_book_path
+  = f.error_messages
+  = render :partial => "waste_books/top_section",  :locals => { :f => f }
+  .buttonbar
+    = f.submit "创建现金收支记录"
+    or 
+    = link_to_cancel new_waste_book_path
+    

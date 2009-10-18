@@ -1,0 +1,19 @@
+if @waste_book.valid?
+  page[:create_waste_book_arrow].replace_html "&#9658;"
+  page[:create_waste_book_title].replace_html "现金收支"
+  page.visual_effect :toggle_blind, :create_waste_book, :duration => 0.3, :afterFinish => 'function(effect) {effect.element.update("")}'
+  page.insert_html :top, :waste_books, :partial => "waste_book", :collection => [ @waste_book ]
+  page[dom_id(@waste_book)].visual_effect :highlight, :duration => 1.5
+  if called_from_index_page?
+    page << refresh_sidebar(:index, :filters)
+    page[:paginate].replace_html render(:partial => "common/paginate")
+  else
+    page[:recently].replace :partial => "common/recently"
+  end
+  page.call "crm.flick", :empty, :remove
+else
+  page[:create_waste_book].replace_html :partial => "create"
+  page.call "crm.create_or_select_customer", request.referer =~ /\/customers\// || @customer.id.blank?
+  page[:create_waste_book].visual_effect :shake, :duration => 0.25, :distance => 6
+  page[:waste_book_name].focus
+end

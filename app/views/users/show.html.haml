@@ -1,0 +1,13 @@
+.title_tools
+  - if @user == @current_user
+    = link_to_inline(:edit_profile, edit_user_path(@user), :text => "修改设置") + " | "
+    = link_to_inline(:change_password, password_user_path(@user), :text => "修改密码")
+.title#title= (@user == @current_user ? "我的" : "") << "设置"
+%div#edit_profile{ hidden }
+%div#upload_avatar{ hidden }
+%div#change_password{ hidden }
+
+.list#profile= render :partial => "user"
+ 
+ 
+

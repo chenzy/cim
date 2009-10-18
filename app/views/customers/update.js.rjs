@@ -1,0 +1,21 @@
+id = called_from_landing_page? ? "edit_customer" : dom_id(@customer)
+
+if @customer.errors.empty?
+  if called_from_landing_page?
+    page.call "crm.flip_form", :edit_customer
+    page.call "crm.set_title", :edit_customer, @customer.name
+    page << refresh_sidebar(:show, :summary)
+  else
+    page[id].replace :partial => "customer", :collection => [ @customer ]
+    page[id].visual_effect :highlight, :duration => 1.0
+    if called_from_index_page?
+      page << refresh_sidebar(:index, :filters)
+    else
+      page[:recently].replace :partial => "common/recently"
+    end
+  end
+else  
+  page[id].replace_html :partial => "edit"
+  page[id].visual_effect :shake, :duration => 0.25, :distance => 6
+  page[:customer_name].focus
+end

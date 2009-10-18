@@ -1,0 +1,31 @@
+= content_for(:javascript_epilogue) do
+  :plain
+    document.observe("dom:loaded", function() {
+      new Effect.Move("standalone", { x:0, y:-16, mode:"relative", fps:100, duration:0.15, afterFinishInternal: function(effect) {
+        new Effect.Move("standalone", { x:0, y:16, mode:"relative", fps:100, duration:0.15, afterFinishInternal: function(effect) {
+          new Effect.Move("standalone", { x:0, y:-8, mode:"relative", fps:100, duration:0.15, afterFinishInternal: function(effect) {
+            new Effect.Move("standalone", { x:0, y:8, mode:"relative", fps:100, duration:0.15 });
+          }});
+        }});
+      }});
+    });
+
+.standalone#standalone
+  -# The following form gets submitted to #create when @authentication is nil,
+  -# or to #update when @authentication is not nil (ex. suspended).
+  - form_for @user_session, :url => user_session_path, :html => one_submit_only(:user_session) do |f|
+    - if can_signup?
+      .title_tools== 还没有开通账号? #{link_to '现在注册!', signup_path}
+    .title 登录
+    .section
+      .label 用户名:
+      = f.text_field :login
+      .label 密码:
+      = f.password_field :password
+
+    %div(style="margin-left:12px") #{f.check_box(:remember_me)} 记住我
+    %br
+    .buttonbar
+      = f.submit "登录"
+      or 
+      = link_to "忘记密码?", new_password_path

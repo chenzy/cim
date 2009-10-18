@@ -1,0 +1,6 @@
+unless @waste_books.blank?
+  page[:waste_books].replace_html render(:partial => "waste_book", :collection => @waste_books)
+else
+  page[:waste_books].replace_html render(:partial => "common/empty")
+end 
+page[:paginate].replace_html render(:partial => "common/paginate")

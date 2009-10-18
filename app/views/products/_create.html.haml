@@ -1,0 +1,9 @@
+- remote_form_for(@product, :html => one_submit_only(:product)) do |f|
+  = link_to_close new_product_path
+  = f.error_messages
+  = render :partial => "products/top_section",  :locals => { :f => f }
+  .buttonbar
+    = f.submit "创建产品"
+    or 
+    = link_to_cancel new_product_path
+    

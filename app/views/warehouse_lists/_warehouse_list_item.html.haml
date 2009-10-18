@@ -1,0 +1,26 @@
+.section
+  %table{ :width => 500, :cellpadding => 0, :cellspacing => 0 }
+    %tr
+      %td{ :valign => :top }
+        .label.top.req 产品：
+        = f.collection_select :product_id, @products, :id, :name, {:prompt => "请选择…"}
+      %td= spacer
+      %td{ :valign => :top }
+        .label.top.req 单价：
+        = f.text_field :unit_price, :style => "width:60px;text-align:right;", :onchange => "set_product_total(this);"     
+      %td= spacer
+      %td{ :valign => :top }
+        .label.top.req 数量：
+        = f.text_field :amount, :style => "width:60px;text-align:right;", :onchange => "set_product_total(this);"
+      %td= spacer
+      %td{ :valign => :top }
+        .label.top.req 金额：
+        = f.text_field :total, :style => "width:60px;text-align:right;", :onchange => "set_warehouse_list_total(this);"
+      %td= spacer
+      %td{ :valign => :top }
+        .label.top 备注：
+        = f.text_field :description, :style => "width:120px"
+      %td= spacer
+      %td{ :valign => :bottom, :nowrap => :nowrap }
+        .label.top
+          = remove_child_link "删除!", f

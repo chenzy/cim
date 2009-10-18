@@ -1,0 +1,16 @@
+%li[customer]{ highlightable(dom_id(customer, :tools)) }
+  - if customer.c_type == "stock"
+    .strip.income 我的采购商
+  - else
+    .strip.outgo 我的供货商
+  %div
+    .tools{ invisible, :id => dom_id(customer, :tools) }
+      %small
+        = link_to_edit(customer) + " | "
+        = link_to_delete(customer) + "&nbsp;"
+    = customer.name << " &ndash; "
+    %tt 
+      == added #{time_ago_in_words(customer.created_at)} ago
+      
+
+

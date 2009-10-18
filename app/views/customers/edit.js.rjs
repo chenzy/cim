@@ -1,0 +1,33 @@
+id = dom_id(@customer)
+
+if params[:cancel] == "true" # <----------------- Hide [Edit Customer]
+
+  if called_from_landing_page?
+    page.call "crm.flip_form", :edit_customer
+    page.call "crm.set_title", :edit_customer, @customer.name
+  else                                            # Called from customers list item...
+    page[id].replace :partial => "customer", :collection => [ @customer ]
+  end
+
+else # <----------------------------------------  Show [Edit Customer] form.
+
+  if params[:cancel].blank?                       # Called from customers list item...
+    if @previous                                  # Hide open [Edit Customer] form if any.
+      if @previous.is_a?(Customer)
+        page[dom_id(@previous)].replace :partial => "customer", :collection => [ @previous ]
+      else
+        page.call "crm.flick", "customer_#{@previous}", :remove
+      end
+    end
+    page.call "crm.highlight_off", id             # Disable onMouseOver for the list item.
+    page.call "crm.hide_form", :create_customer    # Hide [Create Customer] form if any.
+    page[id].replace_html :partial => "edit"      # Show [Edit Customer] form.
+
+  elsif params[:cancel] == "false"                # Called from title of the customer landing page...
+    page[:edit_customer].replace_html :partial => "edit"
+    page.call "crm.flip_form", :edit_customer
+    page.call "crm.set_title", :edit_customer, "Edit #{@customer.name}"
+  end
+  page[:customer_name].focus
+
+end

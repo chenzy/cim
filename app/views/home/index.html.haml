@@ -1,0 +1,17 @@
+.title_tools
+  = link_to_inline(:options, url_for(:action => :options), :text=>'选项')
+
+.title
+  %span#title 近来活动
+  = image_tag("loading.gif", :size => "16x16", :id => "loading", :style => "display: none;")
+.remote#options{ hidden }
+
+.list#activities
+  - unless @activities.empty?
+    = render :partial => "activity", :collection => @activities
+  - else
+    暂无活动记录。
+
+/
+  Check out HTML source to view the output of the hook if you have sample plugin installed
+  = hook(:home_view, self, :hello => "world!", :welcome => "home")

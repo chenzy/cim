@@ -1,0 +1,14 @@
+if @user.errors.empty?
+  page.call "crm.flip_form", :edit_profile
+  page.call "crm.set_title", :edit_profile, "我的设置"
+  if @current_user.name.blank?
+    page[:welcome_username].replace_html @current_user.login
+  else
+    page[:welcome_username].replace_html @current_user.name
+  end
+  page[:profile].replace_html :partial => "user"
+else  
+  page[:edit_profile].replace_html :partial => "profile"
+  page[:edit_profile].visual_effect :shake, :duration => 0.25, :distance => 6
+  page[:user_email].focus
+end

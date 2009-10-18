@@ -1,0 +1,6 @@
+unless @products.blank?
+  page[:products].replace_html render(:partial => "product", :collection => @products)
+else
+  page[:products].replace_html render(:partial => "common/empty")
+end 
+page[:paginate].replace_html render(:partial => "common/paginate")

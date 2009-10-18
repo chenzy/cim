@@ -1,0 +1,13 @@
+.standalone
+  - form_for @user, :url => password_path, :method => :put,, :html => one_submit_only(:user) do |f|
+    .title 重置密码
+    = f.error_messages
+    .intro 请在下面输入您的新密码
+    .section
+      .label 密码:
+      = f.password_field :password
+      .label 密码确认:
+      = f.password_field :password_confirmation
+    %br
+    .buttonbar
+      = f.submit "更改密码并登录"

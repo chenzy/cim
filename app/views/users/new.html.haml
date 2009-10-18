@@ -1,0 +1,17 @@
+.standalone
+  - form_for(@user, :html => one_submit_only(:user)) do |f|
+    .title_tools== 已经注册? #{link_to "现在登录!", login_path}
+    .title 注册
+    = f.error_messages
+    .section
+      .label Email:
+      = f.text_field :email
+      .label 用户名:
+      = f.text_field :login
+      .label 密码:
+      = f.password_field :password
+      .label 密码确认:
+      = f.password_field :password_confirmation
+
+    .buttonbar
+      = f.submit "注册"

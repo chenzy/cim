@@ -1,0 +1,11 @@
+page.call "crm.flick", :empty, :toggle
+page.call "crm.flip_form", :create_waste_book
+
+if params[:cancel] != "true"
+  page[:create_waste_book].replace_html :partial => "create"
+  page.call "crm.set_title", :create_waste_book, "创建现金收支记录"
+  page.call "crm.date_select_popup", :waste_book_happen_time
+  page.call "crm.create_or_select_customer", request.referer =~ /\/customers\// || @customer.id.blank?
+else
+  page.call "crm.set_title", :create_waste_book, "现金收支"
+end

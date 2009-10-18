@@ -1,0 +1,14 @@
+.filters#filters
+  = render :partial => "common/search"
+  .check_box{:style => "border-bottom: 1px silver dotted;"}
+    %div{:style => "float:right;"}
+      = @customer_type_total[:stock]
+    = customer_type_checbox("stock", @customer_type_total[:stock]) << " 我的采购商"
+  .check_box{:style => "border-bottom: 1px silver dotted;"}
+    %div{:style => "float:right;"}
+      = @customer_type_total[:supply]
+    = customer_type_checbox("supply", @customer_type_total[:supply]) << " 我的供货商"
+  .check_box
+    %div{:style => "float:right;"}
+      %b= @customer_type_total[:all]
+    %b 合计

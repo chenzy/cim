@@ -1,0 +1,18 @@
+.section
+  %table{ :width => 500, :cellpadding => 0, :cellspacing => 0 }
+    %tr
+      %td{ :valign => :top }
+        .label.top.req 产品名称：
+        = f.text_field :name, :style => "width:240px"
+      %td= spacer
+      %td{ :valign => :top }
+        .label.top 规格:
+        = f.text_field :spec, :style => "width:240px"
+    %tr
+      %td{ :valign => :top }
+        .label.top 单位：
+        = f.text_field :unit, :style => "width:240px"
+      %td= spacer
+      %td{ :valign => :top }
+        .label.top 单价:
+        = f.text_field :unit_price, :style => "width:240px;text-align:right;"

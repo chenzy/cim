@@ -1,0 +1,24 @@
+#header
+  #welcome
+    - if @current_user
+      欢迎您，
+      -# This span gets updated on the fly if user changes her name.
+      %span#welcome_username
+        - if @current_user.name.blank?
+          = @current_user.login
+        - else
+          = @current_user.name
+      %span> !&nbsp;&nbsp;
+
+      = link_to("快速查找", "#", :id => "jumper") << " |"
+      = link_to("设置", profile_path) << " |"
+      - if @current_user.admin?
+        = link_to("管理", "#") << " |"
+      = link_to("退出", logout_path, :method => :delete)
+      = render :partial => "/layouts/jumpbox"
+    - else
+      = link_to("登录", login_path) << " |"
+      = link_to("注册", signup_path) << " |" if can_signup?
+      = link_to("关于", "#about", :rel => "facebox")
+  %h3
+    = link_to("企业内部管理系统", root_path)

@@ -1,0 +1,16 @@
+= styles_for :warehouse_list
+
+.title_tools
+  = link_to_inline(:create_warehouse_list, new_warehouse_list_path, {:text=>"创建出入库单"})
+
+.title
+  %span#create_warehouse_list_title 仓库
+  = image_tag("loading.gif", :size => "16x16", :id => "loading", :style => "display: none;")
+.remote#create_warehouse_list{ hidden }
+
+.list#warehouse_lists
+  - unless @warehouse_lists.empty?
+    = render :partial => "warehouse_list", :collection => @warehouse_lists
+  - else
+    = render :partial => "common/empty"
+#paginate= render :partial => "common/paginate"

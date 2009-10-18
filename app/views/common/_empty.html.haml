@@ -1,0 +1,7 @@
+- assets = controller.controller_name
+- asset = assets.singularize
+#empty
+  - if @current_query.blank?
+    == 找不到 #{contronller_chinese_name(assets)}. 现在 #{link_to_remote("创建一个新的 " << contronller_chinese_name(assets), :url => send("new_" << asset << "_path"))}.
+  - else
+    == 找不到 #{contronller_chinese_name(assets)} 匹配 <span class="cool"><b>#{h @current_query}</b></span>; 请尝试其他查询条件.

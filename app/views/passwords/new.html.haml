@@ -1,0 +1,10 @@
+.standalone
+  - form_tag(passwords_path, one_submit_only(:passwords)) do
+    .title 忘记密码
+    .intro 请输入你注册时填写的Email，我们将会把重置密码的操作指南发给您。
+    .section
+      .label Email:
+      = text_field_tag :email
+    %br
+    .buttonbar
+      = submit_tag "重置密码"

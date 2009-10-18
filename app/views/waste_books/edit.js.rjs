@@ -1,0 +1,36 @@
+id = dom_id(@waste_book)
+
+if params[:cancel] == "true" # <----------------- Hide [Edit Waste_book]
+
+  if called_from_landing_page?
+    page.call "crm.flip_form", :edit_waste_book
+    page.call "crm.set_title", :edit_waste_book, @waste_book.name
+  else                                            # Called from waste_books list item...
+    page[id].replace :partial => "waste_book", :collection => [ @waste_book ]
+  end
+
+else # <----------------------------------------  Show [Edit Waste_book] form.
+
+  if params[:cancel].blank?                       # Called from waste_books list item...
+    if @previous                                  # Hide open [Edit Waste_book] form if any.
+      if @previous.is_a?(WasteBook)
+        page[dom_id(@previous)].replace :partial => "waste_book", :collection => [ @previous ]
+      else
+        page.call "crm.flick", "waste_book_#{@previous}", :remove
+      end
+    end
+    page.call "crm.highlight_off", id             # Disable onMouseOver for the list item.
+    page.call "crm.hide_form", :create_waste_book    # Hide [Create Waste_book] form if any.
+    page[id].replace_html :partial => "edit"      # Show [Edit Waste_book] form.
+
+  elsif params[:cancel] == "false"                # Called from title of the waste_book landing page...
+    page[:edit_waste_book].replace_html :partial => "edit"
+    page.call "crm.flip_form", :edit_waste_book
+    page.call "crm.set_title", :edit_waste_book, "Edit #{@waste_book.name}"
+  end
+
+  page.call "crm.date_select_popup", :waste_book_happen_time
+  page.call "crm.create_or_select_customer", request.referer =~ /\/customers\// || @customer.id.blank?
+  page[:waste_book_name].focus
+
+end

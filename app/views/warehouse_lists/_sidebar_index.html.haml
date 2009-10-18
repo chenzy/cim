@@ -1,0 +1,14 @@
+.filters#filters
+  = render :partial => "common/search"
+  .check_box{:style => "border-bottom: 1px silver dotted;"}
+    %div{:style => "float:right;"}
+      = @warehouse_list_type_total[:in]
+    = warehouse_list_type_checbox("in", @warehouse_list_type_total[:in]) << " 入库单"
+  .check_box{:style => "border-bottom: 1px silver dotted;"}
+    %div{:style => "float:right;"}
+      = @warehouse_list_type_total[:out]
+    = warehouse_list_type_checbox("out", @warehouse_list_type_total[:out]) << " 出库单"
+  .check_box
+    %div{:style => "float:right;"}
+      %b= @warehouse_list_type_total[:all]
+    %b 合计

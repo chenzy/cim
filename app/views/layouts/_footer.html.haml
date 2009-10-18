@@ -1,0 +1,7 @@
+#footer
+  Powered by #{link_to "企业内部管理系统", "#", :popup => false }
+  v#{FatFreeCRM::Version} &copy; 2008-#{Date.today.year} by chenzy
+  - unless tabless_layout?
+    | #{link_to("About", "#about", :rel => "facebox")}
+%br
+= render :partial => "layouts/about"

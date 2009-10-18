@@ -1,0 +1,33 @@
+id = dom_id(@product)
+
+if params[:cancel] == "true" # <----------------- Hide [Edit Customer]
+
+  if called_from_landing_page?
+    page.call "crm.flip_form", :edit_product
+    page.call "crm.set_title", :edit_product, @product.name
+  else                                            # Called from products list item...
+    page[id].replace :partial => "product", :collection => [ @product ]
+  end
+
+else # <----------------------------------------  Show [Edit Customer] form.
+
+  if params[:cancel].blank?                       # Called from products list item...
+    if @previous                                  # Hide open [Edit Customer] form if any.
+      if @previous.is_a?(Product)
+        page[dom_id(@previous)].replace :partial => "product", :collection => [ @previous ]
+      else
+        page.call "crm.flick", "product_#{@previous}", :remove
+      end
+    end
+    page.call "crm.highlight_off", id             # Disable onMouseOver for the list item.
+    page.call "crm.hide_form", :create_product    # Hide [Create Customer] form if any.
+    page[id].replace_html :partial => "edit"      # Show [Edit Customer] form.
+
+  elsif params[:cancel] == "false"                # Called from title of the product landing page...
+    page[:edit_product].replace_html :partial => "edit"
+    page.call "crm.flip_form", :edit_product
+    page.call "crm.set_title", :edit_product, "Edit #{@product.name}"
+  end
+  page[:product_name].focus
+
+end

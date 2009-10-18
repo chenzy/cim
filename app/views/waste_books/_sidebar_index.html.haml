@@ -1,0 +1,14 @@
+.filters#filters
+  = render :partial => "common/search"
+  .check_box{:style => "border-bottom: 1px silver dotted;"}
+    %div{:style => "float:right;"}
+      = @waste_book_type_total[:income]
+    = waste_book_type_checbox("income", @waste_book_type_total[:income]) << " 收入"
+  .check_box{:style => "border-bottom: 1px silver dotted;"}
+    %div{:style => "float:right;"}
+      = @waste_book_type_total[:outgo]
+    = waste_book_type_checbox("outgo", @waste_book_type_total[:outgo]) << " 支出"
+  .check_box
+    %div{:style => "float:right;"}
+      %b= @waste_book_type_total[:all]
+    %b 合计

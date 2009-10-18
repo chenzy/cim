@@ -1,0 +1,9 @@
+.remote
+  - remote_form_for(@waste_book, :html => one_submit_only(:waste_book)) do |f|
+    = link_to_close edit_waste_book_path(@waste_book)
+    = f.error_messages
+    = render :partial => "waste_books/top_section",  :locals => { :f => f, :edit => true }
+    .buttonbar
+      = f.submit "保存现金收支记录"
+      or 
+      = link_to_cancel edit_waste_book_path(@waste_book)
