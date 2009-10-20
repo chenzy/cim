@@ -32,9 +32,9 @@ module FatFreeCRM
     end
 
     def self.admin
-      @@admin = { :active => true,  :text => "Users",         :url => { :controller => "admin/users"    } },
-        { :active => true,  :text => "Settings",      :url => { :controller => "admin/settings" } },
-        { :active => true,  :text => "Plugins",       :url => { :controller => "admin/plugins"  } }
+      @@admin = { :active => true,  :text => "用户",         :url => { :controller => "admin/users"    } },
+        { :active => true,  :text => "配置",      :url => { :controller => "admin/settings" } },
+        { :active => true,  :text => "插件",       :url => { :controller => "admin/plugins"  } }
       @@admin || reload!(:admin)
     end
 
