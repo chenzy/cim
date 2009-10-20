@@ -12,10 +12,15 @@ ActionController::Routing::Routes.draw do |map|
   map.profile "profile", :controller => "users",           :action => "show"
   map.login   "login",   :controller => "user_sessions", :action => "new"
   map.logout  "logout",  :controller => "user_sessions", :action => "destroy"
-
+  map.admin   "admin",   :controller => "admin/users",     :action => "index"
+  map.namespace :admin do |admin|
+    admin.resources :users, :collection => { :search => :get, :auto_complete => :post }, :member => { :suspend => :put, :reactivate => :put, :confirm => :get }
+    admin.resources :settings
+    admin.resources :plugins
+  end
+  
   map.resources :passwords
-  map.resource :user_session 
-  map.resource :account, :controller => "users"
+  map.resource :user_session  
   map.resources :users, :member => { :password => :get, :change_password => :put }
   # The priority is based upon order of creation: first created -> highest priority.
 
