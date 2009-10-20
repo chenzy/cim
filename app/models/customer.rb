@@ -18,6 +18,10 @@ class Customer < ActiveRecord::Base
       @customer = Customer.find( params[:customer][:id])
     end
     unless params[:customer][:name].blank?
+      @customer = Customer.find_by_name(params[:customer][:name])
+      if @customer
+        return @customer
+      end
       @customer = Customer.new
       @customer.name = params[:customer][:name]    ;
       if(params[:waste_book][:w_type] == "income")
@@ -35,6 +39,10 @@ class Customer < ActiveRecord::Base
       @customer = Customer.find( params[:customer][:id])
     end
     unless params[:customer][:name].blank?
+      @customer = Customer.find_by_name(params[:customer][:name])
+      if @customer
+        return @customer
+      end
       @customer = Customer.new
       @customer.name = params[:customer][:name]    ;
       if(params[:warehouse_list][:w_type] == "income")
