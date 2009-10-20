@@ -8,8 +8,14 @@ function set_product_total(obj){
     var unit_price = $(prefix + "unit_price");
     var total = $(prefix + "total");
     
-    total.value = amount.value * unit_price.value;
-
+    var totalValue = amount.value * unit_price.value;
+    if(totalValue) {
+        total.value = totalValue;
+    }
+    else {
+        total.value = 0;
+    }
+    
     set_warehouse_list_total(obj);
 }
 function set_warehouse_list_total(obj) {
