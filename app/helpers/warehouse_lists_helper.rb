@@ -1,5 +1,5 @@
 module WarehouseListsHelper
-     # Sidebar checkbox control for filtering campaigns by status.
+  # Sidebar checkbox control for filtering customers by status.
   #----------------------------------------------------------------------------
   def warehouse_list_type_checbox(type, count)
     checked = (session[:filter_by_warehouse_list_type] ? session[:filter_by_warehouse_list_type].split(",").include?(type.to_s) : count > 0)

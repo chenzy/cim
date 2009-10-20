@@ -70,7 +70,7 @@ module ApplicationHelper
   end
 
   #----------------------------------------------------------------------------
-  def link_to_edit(model)
+  def link_to_edit(model) 
     name = model.class.name.downcase
     if name == 'wastebook'
       name = 'waste_book'
