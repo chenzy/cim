@@ -3,8 +3,8 @@ class CustomersController < ApplicationController
   before_filter :get_data_for_sidebar, :only => :index
   before_filter :set_current_tab, :only => [ :index, :show ]
   before_filter :auto_complete, :only => :auto_complete
-  #after_filter  :update_recently_viewed, :only => :show
-
+  after_filter  :update_recently_viewed, :only => :show
+  before_filter :can_modify?, :except => [:index, :show]
   # GET /customers
   # GET /customers.xml
   def index
@@ -13,7 +13,7 @@ class CustomersController < ApplicationController
     respond_to do |format|
       format.html # index.html.haml
       format.js   # index.js.rjs
-      format.xml  { render :xml => @campaigns }
+      format.xml  { render :xml => @customers }
     end
   end
 
@@ -110,7 +110,6 @@ class CustomersController < ApplicationController
   rescue ActiveRecord::RecordNotFound
     respond_to_not_found(:html, :js, :xml)
   end
-
   # GET /accounts/search/query                                             AJAX
   #----------------------------------------------------------------------------
   def search
@@ -154,7 +153,6 @@ class CustomersController < ApplicationController
       current_query.blank? ? Customer.all() : Customer.search(current_query)
     end.paginate(pages)
   end
-
   #----------------------------------------------------------------------------
   def respond_to_destroy(method)
     if method == :ajax
@@ -162,12 +160,12 @@ class CustomersController < ApplicationController
       @customers = get_customers
       if @customers.blank?
         @customers = get_customers(:page => current_page - 1) if current_page > 1
-        render :action => :index and return
+        #render :action => :index and return
       end
       # At this point render destroy.js.rjs
     else # :html request
       self.current_page = 1
-      flash[:notice] = "#{@customer.name} �Ѿ�ɾ��."
+      flash[:notice] = "#{@customer.name}已经删除"
       redirect_to(customers_path)
     end
   end

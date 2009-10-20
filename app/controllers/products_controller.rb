@@ -2,6 +2,8 @@ class ProductsController < ApplicationController
   before_filter :require_user 
   before_filter :set_current_tab, :only => [ :index, :show ]
   before_filter :auto_complete, :only => :auto_complete
+  after_filter  :update_recently_viewed, :only => :show
+  before_filter :can_modify?, :except => [:index, :show]
   # GET /products
   # GET /products.xml
   def index
@@ -93,13 +95,16 @@ class ProductsController < ApplicationController
   # DELETE /products/1.xml
   def destroy
     @product = Product.find(params[:id])
-    @product.destroy
+    @product.destroy if @product
 
     respond_to do |format|
-      format.js
-      format.html { redirect_to(products_url) }
+      format.js   { respond_to_destroy(:ajax) }
+      format.html { respond_to_destroy(:html) }
       format.xml  { head :ok }
     end
+
+  rescue ActiveRecord::RecordNotFound
+    respond_to_not_found(:html, :js, :xml)
   end
 
   # GET /accounts/search/query                                             AJAX
@@ -139,5 +144,19 @@ class ProductsController < ApplicationController
       current_query.blank? ? Product.all() : Product.search(current_query)
     end.paginate(pages)
   end
- 
+  #----------------------------------------------------------------------------
+  def respond_to_destroy(method)
+    if method == :ajax 
+      @products = get_products
+      if @products.blank?
+        @products = get_products(:page => current_page - 1) if current_page > 1
+        render :action => :index and return
+      end
+      # At this point render destroy.js.rjs
+    else # :html request
+      self.current_page = 1
+      flash[:notice] = "#{@product.name}已经删除"
+      redirect_to(products_path)
+    end
+  end
 end

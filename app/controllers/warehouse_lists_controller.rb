@@ -3,7 +3,8 @@ class WarehouseListsController < ApplicationController
   before_filter :get_data_for_sidebar, :only => :index
   before_filter :set_current_tab, :only => [ :index, :show ]
   before_filter :auto_complete, :only => :auto_complete
-
+  after_filter  :update_recently_viewed, :only => :show
+  before_filter :can_modify?, :except => [:index, :show]
   # GET /warehouse_lists
   # GET /warehouse_lists.xml
   def index
@@ -191,12 +192,12 @@ class WarehouseListsController < ApplicationController
       @warehouse_lists = get_warehouse_lists
       if @warehouse_lists.blank?
         @warehouse_lists = get_warehouse_lists(:page => current_page - 1) if current_page > 1
-        render :action => :index and return
+        #render :action => :index and return
       end
       # At this point render destroy.js.rjs
     else # :html request
       self.current_page = 1
-      flash[:notice] = "#{@warehouse_list.name} �Ѿ�ɾ��."
+      flash[:notice] = "#{@warehouse_list.name}已经删除"
       redirect_to(warehouse_lists_path)
     end
   end

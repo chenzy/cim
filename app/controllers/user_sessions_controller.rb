@@ -12,7 +12,7 @@ class UserSessionsController < ApplicationController
     if @user_session.save && !@user_session.user.suspended?
       flash[:notice] = "欢迎进入企业内部管理系统"
       if @user_session.user.login_count > 1 && @user_session.user.last_login_at?
-        flash[:notice] << " 您最后一次登录日期是： " << @user_session.user.last_login_at.to_s(:mmddhhss)
+        flash[:notice] << " 您最后一次登录日期是： " << @user_session.user.last_login_at.to_s(:db)
       end
       redirect_back_or_default root_url
     else
