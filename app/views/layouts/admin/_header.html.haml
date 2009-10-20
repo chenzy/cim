@@ -1,0 +1,12 @@
+#header
+  #welcome
+    %span 欢迎, #{@current_user.name.blank? ? @current_user.login : @current_user.name}
+    %span> !&nbsp;&nbsp;
+
+    = link_to("快速查找", "#", :id => "jumper") << " |"
+    = link_to("设置", profile_path) << " |"
+    = link_to("返回前台", root_path) << " |"
+    = link_to("退出", logout_path, :method => :delete)
+    = render :partial => "/layouts/jumpbox"
+  %h3
+    = link_to("企业内部管理系统-管理界面", admin_path)

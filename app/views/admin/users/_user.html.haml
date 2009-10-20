@@ -1,0 +1,54 @@
+%li[user]{ highlightable(dom_id(user, :tools)) }
+
+  - if user.awaits_approval?
+    .strip{:class => "signed_up"} 刚注册
+  - elsif user.suspended?
+    .strip{:class => "suspended"} 挂起
+  - elsif user.admin?
+    .strip{:class => "admin"} 管理员
+  - else
+    .strip{:class => "active"} 激活
+
+
+  .tools{ invisible, :id => dom_id(user, :tools) }
+    %small
+      = link_to_edit(user) << " | "
+
+      - if user.suspended?
+        = link_to_reactivate(user) << " | "
+      - elsif user != @current_user
+        = link_to_suspend(user) << " | "
+      - else
+        = "<font color='silver'>挂起!</font> | "
+
+      - if user != @current_user
+        = link_to_confirm(user) << "&nbsp;"
+      - else
+        <font color='silver'>删除?</font>&nbsp;
+
+  %span.black #{link_to(user.name.blank? ? user.login : user.name , user)} (#{user.login})
+  %tt
+    = "- #{user.title}" unless user.title.blank? 
+
+    %span.black= "|"
+    - if user.last_request_at && user.login_count > 0
+      = "登录" << user.login_count.to_s << "次"
+      %span.black= "|"
+
+    - if user.awaits_approval?
+      %b.cool 等待审批
+    - elsif user.last_request_at
+      %span.cool 最后一次登录 #{time_ago_in_words(user.last_request_at)} ago
+    - else
+      %span.warn 还未登录
+  %dt{ :style => "padding: 2px 0px 0px 0px" }
+    = link_to(user.email, "mailto:" << user.email.to_s) << " | "
+    = "phone: <b>" + user.phone << "</b> | " if user.phone?
+    = "mobile: <b>" + user.mobile << "</b> | " if user.mobile?
+
+    - if !user.suspended?
+      %span 注册日期： #{user.created_at.to_date.to_s(:db)}
+    - elsif user.awaits_approval?
+      %b.cool 注册时间： #{user.created_at.to_s(:db)}
+    - else
+      %span.warn 挂起日期 #{user.created_at.to_date.to_s(:db)}

@@ -1,5 +1,5 @@
 .standalone
-  - form_for @user, :url => password_path, :method => :put,, :html => one_submit_only(:user) do |f|
+  - form_for @user, :url => password_path, :method => :put, :html => one_submit_only(:user) do |f|
     .title 重置密码
     = f.error_messages
     .intro 请在下面输入您的新密码

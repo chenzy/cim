@@ -13,7 +13,7 @@
       = link_to("快速查找", "#", :id => "jumper") << " |"
       = link_to("设置", profile_path) << " |"
       - if @current_user.admin?
-        = link_to("管理", "#") << " |"
+        = link_to("管理", admin_path) << " |"
       = link_to("退出", logout_path, :method => :delete)
       = render :partial => "/layouts/jumpbox"
     - else

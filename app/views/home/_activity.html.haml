@@ -1,6 +1,6 @@
 %li[activity]
   .tools
-    %small= activity.created_at.to_s(:mmddhhss).capitalize
+    %small= activity.created_at.to_s(:db).capitalize
   %tt
     = link_to(activity.user.name, user_path(activity.user))
     = activity.action + (activity.action != "commented" ? " " : " on ")
