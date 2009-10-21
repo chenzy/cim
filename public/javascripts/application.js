@@ -1,3 +1,18 @@
+//设置出入库单的单价与单位
+var Product = {
+    setUnitPriceAndUnit: function(element_id_prefix, data) {
+        var unit_price = data["product"]["unit_price"];
+        var unit_price_element = $(element_id_prefix + 'unit_price');
+        if(unit_price) {
+            unit_price_element.value = unit_price;
+        }
+        else {
+            unit_price_element.value=0;
+        }
+        new Effect.Highlight(unit_price_element);
+    }
+}
+
 //计算出入库单产品价格
 function set_product_total(obj){
     var obj_id = obj.id 
@@ -10,12 +25,12 @@ function set_product_total(obj){
     
     var totalValue = amount.value * unit_price.value;
     if(totalValue) {
-        total.value = totalValue;
+        total.value = totalValue.toFixed(2)
     }
     else {
         total.value = 0;
     }
-    
+    new Effect.Highlight(total);
     set_warehouse_list_total(obj);
 }
 function set_warehouse_list_total(obj) {
@@ -32,15 +47,20 @@ function set_warehouse_list_total(obj) {
             continue;
         }
         var prefix = is_amount ? obj_id.substring(0, obj_id.length - "amount".length) : obj_id.substring(0, obj_id.length - "unit_price".length);
-
-        warehouse_list_total += parseFloat($(prefix + "total").value);
+        
+        var total = parseFloat($(prefix + "total").value);
+        if(total) {
+            warehouse_list_total += total;
+        }
     }
+    var warehouse_list_total_element = $("warehouse_list_total");
     if(warehouse_list_total) {
-        $("warehouse_list_total").value = warehouse_list_total;
+        warehouse_list_total_element.value = warehouse_list_total.toFixed(2);
     }
     else {
-        $("warehouse_list_total").value = 0;
+        warehouse_list_total_element.value = 0;
     }
+    new Effect.Highlight(warehouse_list_total_element);
 }
 
 function insert_fields(link, method, content) {
