@@ -7,4 +7,8 @@ class Product < ActiveRecord::Base
   #----------------------------------------------------------------------------
   def self.per_page ;  20                      ; end
   def self.sort_by  ;  "products.created_at DESC" ; end
+
+  def name_with_spec_with_unit
+    "#{name}（#{spec}）（#{unit}）"
+  end
 end

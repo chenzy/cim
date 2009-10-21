@@ -8,6 +8,7 @@ class WarehouseList < ActiveRecord::Base
   validates_presence_of :number
   validates_presence_of :customer_id
   validates_presence_of :total
+  validates_numericality_of :total
 
   named_scope :only, lambda { |filters| { :conditions => [ "w_type in (?)", filters ] } }
   simple_column_search :number, :escape => lambda { |query| query.gsub(/[^\w\s\-\.']/, "").strip }

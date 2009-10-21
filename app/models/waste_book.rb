@@ -3,6 +3,7 @@ class WasteBook < ActiveRecord::Base
   validates_presence_of :customer_id
   validates_presence_of :name, :message => "^Please specify waste_book name."
   validates_presence_of :money
+  validates_numericality_of :money
 
   belongs_to :customer
 
