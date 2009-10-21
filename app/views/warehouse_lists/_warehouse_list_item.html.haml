@@ -3,7 +3,7 @@
     %tr
       %td{ :valign => :top }
         .label.top.req 产品：
-        = f.collection_select :product_id, @products, :id, :name, {:prompt => "请选择…"}
+        = f.collection_select :product_id, @products, :id, :name_with_spec_with_unit, {:prompt => "请选择…"}, {:onchange =>  remote_function(:url => {:action => 'get_product'},:with =>"'id='+ $(this).value + '&element_id=' + $(this).id") }
       %td= spacer
       %td{ :valign => :top }
         .label.top.req 单价：
