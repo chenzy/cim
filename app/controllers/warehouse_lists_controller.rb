@@ -33,7 +33,7 @@ class WarehouseListsController < ApplicationController
     @warehouse_list = WarehouseList.new
     @customers = Customer.all(:order => "name")
     @customer = Customer.new
-    @products = Product.all
+    @products = Product.all(:order => "name,spec")
 
     3.times { @warehouse_list.warehouse_list_items.build }
     
@@ -51,7 +51,7 @@ class WarehouseListsController < ApplicationController
     @warehouse_list = WarehouseList.find(params[:id])
     @customers = Customer.all(:order => "name")
     @customer  = @warehouse_list.customer || Customer.new
-    @products = Product.all
+    @products = Product.all(:order => "name,spec")
 
     if params[:previous] =~ /(\d+)\z/
       @previous = WarehouseList.find($1)
@@ -80,7 +80,7 @@ class WarehouseListsController < ApplicationController
       else
         @customers = Customer.all(:order => "name")
 
-        @products = Product.all 
+        @products = Product.all(:order => "name,spec")
         unless params[:customer][:id].blank?
           @customer = Customer.find(params[:customer][:id])
         else
@@ -113,7 +113,7 @@ class WarehouseListsController < ApplicationController
         format.xml  { head :ok }
       else
         @customers = Customer.all(:order => "name")
-        @products = Product.all
+        @products = Product.all(:order => "name,spec")
         if @warehouse_list.customer
           @customer = Customer.find(@warehouse_list.customer.id)
         else
@@ -206,5 +206,11 @@ class WarehouseListsController < ApplicationController
     @warehouse_list_type_total = { :all => WarehouseList.all().size() }
     @warehouse_list_type_total[:in] = WarehouseList.all(:conditions => [ "w_type=?", "in" ]).size()
     @warehouse_list_type_total[:out] = @warehouse_list_type_total[:all] - @warehouse_list_type_total[:in]
+  end
+  #----------------------------------------------------------------------------
+  def get_product
+    @product = params[:id].blank? ? Product.new : Product.find(params[:id])
+    @element_id = params[:element_id].to_s
+    @element_id_prefix = @element_id.sub(/(product_id)/, "") 
   end
 end
