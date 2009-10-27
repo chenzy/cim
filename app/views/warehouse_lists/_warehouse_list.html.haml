@@ -12,13 +12,44 @@
     %tt 
       == added #{time_ago_in_words(warehouse_list.created_at)} ago
     %dt
-      日期：#{warehouse_list.happen_time}
+      日期：#{warehouse_list.happen_time.to_date}
       |
       客户：#{warehouse_list.customer.blank? ? "" : warehouse_list.customer.name}
       | 
       合计：#{warehouse_list.total}
     %dt
       备注：#{warehouse_list.description}
-      
-
-
+      .datatable
+        %table{ :width => 500, :cellpadding => 0, :cellspacing => 0, :border => 0 }
+          %tr
+            %th
+              产品
+            %th
+              规格
+            %th
+              单位
+            %th{:class=>'money'}
+              单价
+            %th{:class=>'money'}
+              数量
+            %th{:class=>'money'}
+              金额
+            %th
+              备注
+          - warehouse_list.warehouse_list_items.each do |item|
+            %tr
+              %td
+                =item.product.name
+              %td
+                =item.product.spec
+              %td
+                =item.product.unit
+              %td{:class=>'money'}
+                =item.unit_price
+              %td{:class=>'money'}
+                =item.amount
+              %td{:class=>'money'}
+                =item.total
+              %td
+                =item.description
+                &nbsp;

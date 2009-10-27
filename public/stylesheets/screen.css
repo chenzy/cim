@@ -163,8 +163,7 @@ tt {
   line-height: 20px; }
   .radio_box input {
     position: relative;
-    top: -2px;
-  }
+    top: -2px; }
 
 .check_box {
   line-height: 20px; }
@@ -296,12 +295,6 @@ tt {
   -moz-border-radius-bottomleft: 7px;
   -webkit-border-top-left-radius: 7px;
   -webkit-border-bottom-left-radius: 7px; }
-.outgo{
-    color:red;
-}
-.income{
-    color:green;
-}
 
 .bucket {
   margin: 0px 0px 10px 0px; }
@@ -512,6 +505,38 @@ tt {
   .menu a:hover {
     background: mediumblue //#006;
     color: #fff; }
+
+.datatable table {
+  border-bottom-width: 1px;
+  border-left-width: 1px;
+  border-bottom-style: dotted;
+  border-left-style: dotted;
+  border-bottom-color: #999999;
+  border-left-color: #999999; }
+.datatable th {
+  background-color: #f3f3f3;
+  text-align: center;
+  font-size: 12px;
+  line-height: 22px;
+  border-top-width: 1px;
+  border-right-width: 1px;
+  border-top-style: dotted;
+  border-right-style: dotted;
+  border-top-color: #999999;
+  border-right-color: #999999; }
+.datatable td {
+  text-align: center;
+  font-size: 12px;
+  line-height: 22px;
+  border-top-width: 1px;
+  border-right-width: 1px;
+  border-top-style: dotted;
+  border-right-style: dotted;
+  border-top-color: #999999;
+  border-right-color: #999999; }
+.datatable .money {
+  text-align: right;
+  padding-right: 3px; }
 
 .errorExplanation {
   background-color: seashell;

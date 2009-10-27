@@ -1,19 +1,10 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
 
-  def contronller_chinese_name(controller)
-    {'warehouse_lists' => '仓库', 'waste_books' => '现金收支', 'customers' => '客户', 'products' => '产品'}[controller]
-  end
-
-  def model_chinese_name(model)
-    {'WarehouseList' => '仓库', 'WasteBook' => '现金收支', 'Customer' => '客户', 'Product' => '产品'}[model]
-  end
-
-
   def tabs(tabs = FatFreeCRM::Tabs.main)
     if tabs
       @current_tab ||= tabs.first[:text].downcase.to_sym # Select first tab by default.
-      tabs.each { |tab| tab[:active] = (tab[:text].downcase.to_sym == @current_tab || tab[:url][:controller].to_sym == @current_tab) }
+      tabs.each { |tab| tab[:active] = (@current_tab == tab[:text].downcase || @current_tab == tab[:url][:controller]) }
     else
       raise RuntimeError.new("Tab settings are missing, please run 'rake crm:setup'")
     end
@@ -230,6 +221,11 @@ module ApplicationHelper
     end
   end
 
+  #----------------------------------------------------------------------------
+  def activate_facebox
+    %Q/document.observe("dom:loaded", function() { new Facebox('#{Setting.base_url}'); });/
+  end
+  
   def remove_child_link(name, f)
     f.hidden_field(:_delete) + link_to_function(name, "remove_fields(this)")
   end
@@ -247,4 +243,12 @@ module ApplicationHelper
       render(:partial => options[:partial], :locals => { options[:form_builder_local] => f })
     end
   end
+  def contronller_chinese_name(controller)
+    {'warehouse_lists' => '仓库', 'waste_books' => '现金收支', 'customers' => '客户', 'products' => '产品'}[controller]
+  end
+
+  def model_chinese_name(model)
+    {'WarehouseList' => '仓库', 'WasteBook' => '现金收支', 'Customer' => '客户', 'Product' => '产品'}[model]
+  end
+  
 end

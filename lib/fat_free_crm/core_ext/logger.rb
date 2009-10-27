@@ -15,28 +15,17 @@
 # along with this program.  If not, see <http:#www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
 
-class String
-  
-  alias :- :delete
+class ActiveSupport::BufferedLogger
 
+  BRIGHT = "\033[1;37;40m"
+  NORMAL = "\033[0m"
 
-  def n2br
-    strip.gsub("\n", "<br />")
+  def p(*args)
+    info "#{BRIGHT}\n\n" << args.join(" ") << "#{NORMAL}\n\n\n"
   end
 
-
-  def wrap(prefix, suffix = prefix)
-    prefix + self + suffix
-  end
-
-
-  def digitize
-    gsub(/[^\d]/, "")  # "$100,000".digitize # => 100000
-  end
-
-
-  def to_url
-    self.match(/^https?:\/\//) ? self : "http://" << self
+  def i(*args)
+    info "#{BRIGHT}\n\n" << args.map(&:inspect).join(" ") << "#{NORMAL}\n\n\n"
   end
 
 end

@@ -32,14 +32,15 @@ module FatFreeCRM
       @@responder[method] ||= @@classes.map { |klass| klass.instance }.select { |instance| instance.respond_to?(method) }
     end
 
-    # Invokes hook method(s) and captures the output.
+    # Invokes the hook named :method and captures its output. The hook returns:
+    # - empty array if no hook with this name was detected.
+    # - array with single item returned by the hook.
+    # - array with multiple items returned by the hook chain.
     #--------------------------------------------------------------------------
     def self.hook(method, caller, context = {})
-      response = ""
-      responder(method).each do |m|
-        response << m.send(method, caller, context).to_s
+      responder(method).inject([]) do |response, m|
+        response << m.send(method, caller, context)
       end
-      response
     end
 
     #--------------------------------------------------------------------------
@@ -63,6 +64,3 @@ module FatFreeCRM
 
   end # module Callback
 end # module FatFreeCRM
-
-ActionView::Base.send(:include, FatFreeCRM::Callback::Helper)
-ActionController::Base.send(:include, FatFreeCRM::Callback::Helper)

@@ -1,4 +1,6 @@
 class Product < ActiveRecord::Base
+  has_one :warehouse_list_item
+
   validates_presence_of :name, :message => "^Please specify product name."
 
   simple_column_search :name, :escape => lambda { |query| query.gsub(/[^\w\s\-\.']/, "").strip }

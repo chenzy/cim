@@ -180,9 +180,9 @@ class WarehouseListsController < ApplicationController
     # Default processing if no :get_leads hooks are present.
     if session[:filter_by_warehouse_list_type]
       filtered = session[:filter_by_warehouse_list_type].split(",")
-      current_query.blank? ? WarehouseList.only(filtered) : WarehouseList.only(filtered).search(current_query)
+      current_query.blank? ? WarehouseList.only(filtered).all(:order => WarehouseList.sort_by) : WarehouseList.only(filtered).search(current_query).all(:order => WarehouseList.sort_by)
     else
-      current_query.blank? ? WarehouseList.all() : WarehouseList.search(current_query)
+      current_query.blank? ? WarehouseList.all(:order => WarehouseList.sort_by) : WarehouseList.search(current_query).all(:order => WarehouseList.sort_by)
     end.paginate(pages)
   end
   #----------------------------------------------------------------------------

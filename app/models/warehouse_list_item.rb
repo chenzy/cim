@@ -1,5 +1,6 @@
 class WarehouseListItem < ActiveRecord::Base
   belongs_to :warehouse_list
+  belongs_to :product
 
   validates_presence_of :amount
   validates_presence_of :unit_price

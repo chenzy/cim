@@ -32,7 +32,7 @@ module FatFreeCRM
       end
     end
     alias :authors :author
-    
+
     # Preload other plugins that are required by the plugin being loaded.
     #--------------------------------------------------------------------------
     def dependencies(*plugins)

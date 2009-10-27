@@ -1,5 +1,5 @@
 class Admin::PluginsController < Admin::ApplicationController
-  before_filter :set_current_tab, :only => [ :index ]
+  before_filter "set_current_tab('admin/plugins')", :only => [ :index ]
 
   # GET /admin/plugins
   # GET /admin/plugins.xml
